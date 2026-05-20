@@ -1,0 +1,59 @@
+touchpad:
+  gestures:
+    # -----------------------------------------------------------------
+    # 3 FINGERS GESTURES (Windows-like Alt+Tab Navigation - FLUID VERSION)
+    # -----------------------------------------------------------------
+    - type: swipe
+      fingers: 3
+      direction: left_right
+      actions:
+        # 1. Saat AWAL usapan: Tahan Alt dan ketuk Tab sekali untuk memicu menu muncul
+        - on: begin
+          input:
+            - keyboard: [ +leftalt, tab ]
+
+        # 2. Saat digerakkan ke KIRI: Gunakan tombol arah kiri (Tanpa interupsi Shift)
+        - on: update
+          interval: -60  # Angka diturunkan ke 60 agar perpindahan lebih sensitif dan cepat
+          input:
+            - keyboard: [ left ]
+
+        # 3. Saat digerakkan ke KANAN: Gunakan tombol arah kanan
+        - on: update
+          interval: 60
+          input:
+            - keyboard: [ right ]
+
+        # 4. Saat Jari DIANGKAT: Lepaskan tombol Alt sepenuhnya untuk memilih window
+        - on: end_cancel
+          input:
+            - keyboard: [ -leftalt ]
+
+    # Swipe Bawah: Collapse semua window (Minimize All)
+    - type: swipe
+      fingers: 3
+      direction: down
+      actions:
+        - plasma_shortcut: "kwin,Show Desktop"
+
+    # Swipe Atas: Overview / Task View
+    - type: swipe
+      fingers: 3
+      direction: up
+      actions:
+        - plasma_shortcut: "kwin,Overview"
+
+    # -----------------------------------------------------------------
+    # 4 FINGERS GESTURES (Virtual Desktop Switching)
+    # -----------------------------------------------------------------
+    - type: swipe
+      fingers: 4
+      direction: left
+      actions:
+        - plasma_shortcut: "kwin,Switch to Previous Desktop"
+
+    - type: swipe
+      fingers: 4
+      direction: right
+      actions:
+        - plasma_shortcut: "kwin,Switch to Next Desktop"
