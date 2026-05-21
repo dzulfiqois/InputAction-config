@@ -29,20 +29,41 @@ touchpad:
           input:
             - keyboard: [ -leftalt ]
 
-    # Swipe Bawah: Collapse semua window (Minimize All)
     - type: swipe
       fingers: 3
       direction: down
-      actions:
-        - plasma_shortcut: "kwin,Show Desktop"
 
-    # Swipe Atas: Overview / Task View
+      actions:
+        - on: begin
+          one:
+            - plasma_shortcut: kwin,Window Fullscreen
+              conditions:
+                - $window_fullscreen == true
+
+            - plasma_shortcut: kwin,Window Maximize
+              conditions:
+                - $window_maximized == true
+
+            - plasma_shortcut: kwin,Window Minimize
+
     - type: swipe
       fingers: 3
       direction: up
-      actions:
-        - plasma_shortcut: "kwin,Overview"
 
+      actions:
+        - on: begin
+          one:
+            - plasma_shortcut: kwin,Window Fullscreen
+              conditions:
+                - $window_fullscreen == true
+
+            - plasma_shortcut: kwin,Window Maximize
+              conditions:
+                - $window_maximized == true
+
+            - plasma_shortcut: kwin,Window Maximize
+
+  
     # -----------------------------------------------------------------
     # 4 FINGERS GESTURES (Virtual Desktop Switching)
     # -----------------------------------------------------------------
@@ -57,3 +78,36 @@ touchpad:
       direction: right
       actions:
         - plasma_shortcut: "kwin,Switch to Next Desktop"
+
+     # Swipe Bawah: Collapse semua window (Minimize All)
+    - type: swipe
+      fingers: 4
+      direction: down
+      actions:
+        - plasma_shortcut: "kwin,Show Desktop"
+
+    # Swipe Atas: Overview / Task View
+    - type: swipe
+      fingers: 4
+      direction: up
+      actions:
+        - plasma_shortcut: "kwin,Overview"
+
+
+    # -----------------------------------------------------------------
+    # 2 FINGERS ROTATES (Volume Control)
+    # -----------------------------------------------------------------
+    - type: rotate
+      fingers: 2
+      direction: any
+
+      actions:
+        - on: update
+          interval: -10
+          input:
+            - keyboard: [ volumedown ]
+
+        - on: update
+          interval: 10
+          input:
+            - keyboard: [ volumeup ]
